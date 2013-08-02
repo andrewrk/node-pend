@@ -7,5 +7,12 @@
     "test": "node test.js"
   },
   "author": "Andrew Kelley <superjoe30@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/superjoe30/node-pend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/superjoe30/node-pend/issues"
+  }
 }
