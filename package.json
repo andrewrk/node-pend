@@ -1,0 +1,11 @@
+{
+  "name": "pend",
+  "version": "1.0.0",
+  "description": "dead-simple optimistic async helper",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Andrew Kelley <superjoe30@gmail.com>",
+  "license": "MIT"
+}
