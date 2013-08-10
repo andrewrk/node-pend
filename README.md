@@ -37,5 +37,3 @@ calling cb 2
 this is excuted when the first 2 have returned.
 err is a possible error in the standard callback style.
 ```
-
-This readme file is longer than the source code.
