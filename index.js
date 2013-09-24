@@ -26,11 +26,13 @@ Pend.prototype.wait = function(cb) {
 
 function pendGo(self, fn) {
   self.pending += 1;
+  var called = false;
   fn(onCb);
   function onCb(err) {
+    if (called) throw new Error("callback called twice");
+    called = true;
     self.error = self.error || err;
     self.pending -= 1;
-    if (self.pending < 0) throw new Error("Callback called twice.");
     if (self.waiting.length > 0 && self.pending < self.max) {
       pendGo(self, self.waiting.shift());
     } else if (self.pending === 0) {

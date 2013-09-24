@@ -54,6 +54,17 @@ function testWithMax() {
   });
   pend.wait(function(err) {
     assert.deepEqual(results, ['a', 'b', 1, 'c', 1, 2]);
+    testCallbackTwice();
   });
   assert.deepEqual(results, ['a', 'b']);
+}
+
+function testCallbackTwice() {
+  var pend = new Pend();
+  pend.go(function(cb) {
+  });
+  pend.go(function(cb) {
+    cb();
+    assert.throws(cb, /callback called twice/);
+  });
 }
