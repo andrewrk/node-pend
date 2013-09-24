@@ -7,6 +7,7 @@ Dead-simple optimistic async helper.
 ```js
 var Pend = require('pend');
 var pend = new Pend();
+pend.max = 10; // defaults to Infinity
 pend.go(function(cb) {
   console.log("this function is immediately executed");
   setTimeout(function() {
