@@ -1,6 +1,6 @@
 {
   "name": "pend",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "dead-simple optimistic async helper",
   "main": "index.js",
   "scripts": {
