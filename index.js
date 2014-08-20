@@ -36,8 +36,9 @@ function pendGo(self, fn) {
     if (self.waiting.length > 0 && self.pending < self.max) {
       pendGo(self, self.waiting.shift());
     } else if (self.pending === 0) {
-      self.listeners.forEach(cbListener);
+      var listeners = self.listeners;
       self.listeners = [];
+      listeners.forEach(cbListener);
     }
   }
   function cbListener(listener) {

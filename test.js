@@ -1,9 +1,42 @@
 var assert = require('assert');
 var Pend = require('./');
 
-testBasic();
+var tests = [
+  {
+    name: "basic",
+    fn: testBasic,
+  },
+  {
+    name: "max",
+    fn: testWithMax,
+  },
+  {
+    name: "callback twice",
+    fn: testCallbackTwice,
+  },
+  {
+    name: "calling wait twice",
+    fn: testCallingWaitTwice,
+  },
+];
+var testCount = tests.length;
 
-function testBasic() {
+doOneTest();
+
+function doOneTest() {
+  var test = tests.shift();
+  if (!test) {
+    console.log(testCount + " tests passed.");
+    return;
+  }
+  process.stdout.write(test.name + "...");
+  test.fn(function() {
+    process.stdout.write("OK\n");
+    doOneTest();
+  });
+}
+
+function testBasic(cb) {
   var pend = new Pend();
   var results = [];
   pend.go(function(cb) {
@@ -22,12 +55,12 @@ function testBasic() {
   });
   pend.wait(function(err) {
     assert.deepEqual(results, [1,2,3,4]);
-    testWithMax();
+    cb();
   });
   assert.deepEqual(results, [1, 2]);
 }
 
-function testWithMax() {
+function testWithMax(cb) {
   var pend = new Pend();
   var results = [];
   pend.max = 2;
@@ -54,17 +87,38 @@ function testWithMax() {
   });
   pend.wait(function(err) {
     assert.deepEqual(results, ['a', 'b', 1, 'c', 1, 2]);
-    testCallbackTwice();
+    cb();
   });
   assert.deepEqual(results, ['a', 'b']);
 }
 
-function testCallbackTwice() {
+function testCallbackTwice(cb) {
   var pend = new Pend();
   pend.go(function(cb) {
+    setTimeout(cb, 100);
   });
   pend.go(function(cb) {
     cb();
     assert.throws(cb, /callback called twice/);
+  });
+  pend.wait(cb);
+}
+
+function testCallingWaitTwice(cb) {
+  var pend = new Pend();
+  pend.go(function(cb) {
+    setTimeout(cb, 100);
+  });
+  pend.wait(function() {
+    pend.go(function(cb) {
+      setTimeout(cb, 50);
+    });
+    pend.go(function(cb) {
+      setTimeout(cb, 10);
+    });
+    pend.go(function(cb) {
+      setTimeout(cb, 20);
+    });
+    pend.wait(cb);
   });
 }
