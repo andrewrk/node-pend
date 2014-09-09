@@ -10,9 +10,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/superjoe30/node-pend.git"
+    "url": "git://github.com/andrewrk/node-pend.git"
   },
   "bugs": {
-    "url": "https://github.com/superjoe30/node-pend/issues"
+    "url": "https://github.com/andrewrk/node-pend/issues"
   }
 }
