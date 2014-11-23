@@ -8,6 +8,7 @@ Dead-simple optimistic async helper.
 var Pend = require('pend');
 var pend = new Pend();
 pend.max = 10; // defaults to Infinity
+setTimeout(pend.hold(), 1000); // pend.wait will have to wait for this hold to finish
 pend.go(function(cb) {
   console.log("this function is immediately executed");
   setTimeout(function() {

@@ -24,10 +24,14 @@ Pend.prototype.wait = function(cb) {
   }
 };
 
-function pendGo(self, fn) {
+Pend.prototype.hold = function() {
+  return pendHold(this);
+};
+
+function pendHold(self) {
   self.pending += 1;
   var called = false;
-  fn(onCb);
+  return onCb;
   function onCb(err) {
     if (called) throw new Error("callback called twice");
     called = true;
@@ -44,4 +48,8 @@ function pendGo(self, fn) {
   function cbListener(listener) {
     listener(self.error);
   }
+}
+
+function pendGo(self, fn) {
+  fn(pendHold(self));
 }

@@ -18,6 +18,10 @@ var tests = [
     name: "calling wait twice",
     fn: testCallingWaitTwice,
   },
+  {
+    name: "hold()",
+    fn: testHoldFn,
+  },
 ];
 var testCount = tests.length;
 
@@ -121,4 +125,13 @@ function testCallingWaitTwice(cb) {
     });
     pend.wait(cb);
   });
+}
+
+function testHoldFn(cb) {
+  var pend = new Pend();
+  setTimeout(pend.hold(), 100);
+  pend.go(function(cb) {
+    cb();
+  });
+  pend.wait(cb);
 }
